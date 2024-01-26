@@ -1,0 +1,88 @@
+{
+    "type": "module",
+    "links": [
+        {
+            "name": "The Weeknd",
+            "url": "https://www.theweeknd.com/",
+            "type": "official-website"
+        },
+
+        {
+            "name": "X O  S T O R E",
+            "url": "https://xo.store/",
+            "type": "official-website"
+        },
+
+        {
+            "name": "TheWeekndVEVO | YouTube",
+            "url": "https://www.youtube.com/channel/UCF_fDSgPpBQuh1MsUTgIARQ",
+            "type": "stream-music"
+        },
+
+        {
+            "name": "The Weeknd | Spotify",
+            "url": "https://open.spotify.com/artist/1Xyo4u8uXC1ZmMpatF05PJ",
+            "type": "stream-music"
+        },
+
+        {
+            "name": "The Weeknd | Apple Music",
+            "url": "https://music.apple.com/us/artist/the-weeknd/479756766",
+            "type": "stream-music"
+        },
+
+        {
+            "name": "theweeknd | Instagram",
+            "url": "https://www.instagram.com/theweeknd/",
+            "type": "social-media"
+        },
+
+        {
+            "name": "Abel Tesfaye | X",
+            "url": "https://twitter.com/theweeknd",
+            "type": "social-media"
+        },
+
+        {
+            "name": "The Weeknd | Facebook",
+            "url": "https://www.facebook.com/theweeknd/",
+            "type": "social-media"
+        },
+
+        {
+            "name": "The Weeknd | TikTok",
+            "url": "https://www.tiktok.com/@theweeknd",
+            "type": "social-media"
+        },
+
+        {
+            "name": "Wikipedia",
+            "url": "https://en.wikipedia.org/wiki/The_Weeknd",
+            "type": "resources"
+        },
+
+        {
+            "name": "BestSellingAlbums.org",
+            "url": "https://bestsellingalbums.org/artist/13284",
+            "type": "resources"
+        },
+
+        {
+            "name": "kworb.net",
+            "url": "https://kworb.net/spotify/artist/1Xyo4u8uXC1ZmMpatF05PJ_albums.html",
+            "type": "resources"
+        },
+
+        {
+            "name": "biography.com",
+            "url": "https://www.biography.com/musicians/the-weeknd",
+            "type": "resources"
+        },
+
+        {
+            "name": "classicrockhistory.com",
+            "url": "https://www.classicrockhistory.com/complete-list-of-the-weeknd-albums-and-songs/",
+            "type": "resources"
+        }
+    ]
+}

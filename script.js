@@ -51,7 +51,7 @@ class ShowContent {
         }
         
         if(content.clickedNav === "links") {
-            content.getDiscographyJson();
+            content.getLinksJson();
             return;
         }
 
@@ -121,16 +121,6 @@ class ShowContent {
         }
     }
 
-    async getLinksJson() {
-        // Παίρνουμε τα στοιχεία που βρίσκονται στο discography.json και τα αποθηκεύουμε στο jsonContent.
-        const response = await fetch("./links.json", {method: "GET"});
-        const jsonContent = await response.json();
-
-        content.linksArr = JSON.parse(JSON.stringify(jsonContent.links)); // Αντιγράφουμε τον πίνακα discography σε νέο πίνακα.
-
-        content.createLinksTable();
-    }
-
     createDiscographyTable() {
         let anHTML = `<table><tr><th>Album</th><th>Release Date</th><th>Spotify Streams</th><th>Total Sales</th></tr>`;
         for(let aDisc of content.discsArr){
@@ -143,22 +133,50 @@ class ShowContent {
         document.querySelector(".discography-section").innerHTML = anHTML;
     }
 
+    async getLinksJson() {
+        try {
+            // Παίρνουμε τα στοιχεία που βρίσκονται στο discography.json και τα αποθηκεύουμε στο jsonContent.
+            const response = await fetch("./links.json", {method: "GET"});
+            const jsonContent = await response.json();
+
+            content.linksArr = JSON.parse(JSON.stringify(jsonContent.links)); // Αντιγράφουμε τον πίνακα discography σε νέο πίνακα.
+
+            if(content.clickedAside === "official-sites") {
+                content.linksArr = content.linksArr.filter(link => link.type === "official-website");
+            } else if(content.clickedAside === "stream-music") {
+                content.linksArr = content.linksArr.filter(link => link.type === "stream-music");
+            } else if(content.clickedAside === "social-media") {
+                content.linksArr = content.linksArr.filter(link => link.type === "social-media");
+            } else {
+                content.linksArr = content.linksArr.filter(link => link.type === "resources");
+            }
+
+            content.createLinksTable();
+        } catch(err) {
+            console.error("Error:", err);
+        }
+    }
+
     createLinksTable() {
         let anHTML = `<table><tr><th>Links</th></tr>`;
         for(let aLink of content.linksArr) {
             if(content.clickedAside === "official-sites") {
-                if(aLink.category === "official-sites") {
+                if(aLink.type === "official-website") {
                     anHTML += "<tr><td><a href =\"" + aLink.url + "\">" + aLink.name + "</a></td></tr>";
                 }
-            } else if(content.clickedAside === "buy-the-books") {
-                if(aLink.category === "buy-the-books") {
+            } else if(content.clickedAside === "stream-music") {
+                if(aLink.type === "stream-music") {
+                    anHTML += "<tr><td><a href =\"" + aLink.url + "\">" + aLink.name + "</a></td></tr>";
+                }
+            } else if(content.clickedAside === "social-media") {
+                if(aLink.type === "social-media") {
                     anHTML += "<tr><td><a href =\"" + aLink.url + "\">" + aLink.name + "</a></td></tr>";
                 }
             } else {
-                if(aLink.category === "resourses") {
+                if(aLink.type === "resources") {
                     anHTML += "<tr><td><a href =\"" + aLink.url + "\">" + aLink.name + "</a></td></tr>";
                 }
-            }  
+            }
         }
         anHTML += "</table>";
         document.querySelector(".links-section").innerHTML = anHTML;
