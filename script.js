@@ -41,58 +41,47 @@ class ShowContent {
         // Για τη βιογραφία και τις φωτογραφίες, απλώς εμφανίζουμε το περιεχόμενό τους.
         if(content.clickedNav === "bio" || content.clickedNav === "photos"){ 
             showMainSection.style.display = "flex";
+            showMainSection.style.flexDirection = "column";
             return;
         }
 
-        if(content.clickedNav === "works"){
-            content.getWorksJson();
+        if(content.clickedNav === "discography"){
+            content.getDiscographyJson();
             return;
         }
         
         if(content.clickedNav === "links") {
-            content.getLinksJson();
+            content.getDiscographyJson();
             return;
         }
 
         showMainSection.style.display = "block";
     }
 
-    async getWorksJson() {
+    async getDiscographyJson() {
         try {
-            // Παίρνουμε τα στοιχεία που βρίσκονται στο works.json και τα αποθηκεύουμε στο jsonContent.
-            const response = await fetch("./works.json", {method: "GET"});
+            // Παίρνουμε τα στοιχεία που βρίσκονται στο discography.json και τα αποθηκεύουμε στο jsonContent.
+            const response = await fetch("./discography.json", {method: "GET"});
             const jsonContent = await response.json();
 
-            content.booksArr = JSON.parse(JSON.stringify(jsonContent.books)); // Αντιγράφουμε τον πίνακα books σε νέο πίνακα.
+            content.discsArr = JSON.parse(JSON.stringify(jsonContent.discography)); // Αντιγράφουμε τον πίνακα discography σε νέο πίνακα.
 
             // Ανάλογα με την επιλογή του χρήστη, εφαρμόζουμε την ανάλογη ταξινόμιση.
             if(content.clickedAside === "by-name") {
                 // Ταξινομούμε ως προς το όνομα του βιβλίου.
-                content.booksArr.sort((a, b) => {
+                content.discsArr.sort((a, b) => {
                     // Μετατρέπουμε τα ονόματα σε πεζά ώστε να γίνει πιό εύστοχη σύγκριση.
                     let elementA = a.name.toLowerCase();
                     let elementB = b.name.toLowerCase();
 
-                    // Μόνο όταν το επιστρέφεται 1 γίνεται αντικατάσταση.
-                    if(elementA < elementB) return -1;
-                    if(elementA > elementB) return 1;
-                    return 0;
-                });
-            } else if(content.clickedAside === "by-genre"){
-                // Ταξινομούμε ως προς το είδος του βιβλίου.
-                content.booksArr.sort((a, b) => {
-                    // Μετατρέπουμε τα ονόματα σε πεζά ώστε να γίνει πιό εύστοχη σύγκριση.
-                    let elementA = a.genre.toLowerCase();
-                    let elementB = b.genre.toLowerCase();
-
-                    // Μόνο όταν το επιστρέφεται 1 γίνεται αντικατάσταση.
+                    // Μόνο όταν επιστρέφεται 1 γίνεται αντικατάσταση.
                     if(elementA < elementB) return -1;
                     if(elementA > elementB) return 1;
                     return 0;
                 });
             } else if(content.clickedAside === "by-release-date") {
                 // Ταξινομούμε ως προς την ημερομηνία κυκλοφορίας του βιβλίου.
-                content.booksArr.sort((a, b) => { 
+                content.discsArr.sort((a, b) => { 
                     let elementA = a.release_date;
                     let elementB = b.release_date;
 
@@ -101,24 +90,24 @@ class ShowContent {
                     if(elementA > elementB) return 1;
                     return 0;
                 });
-            } else if(content.clickedAside === "publisher") {
-                // Ταξινομούμε ως προς τον εκδότη του βιβλίου.
-                content.booksArr.sort((a, b) => {
+            } else if(content.clickedAside === "by-spotify-streams"){
+                // Ταξινομούμε ως προς το είδος του βιβλίου.
+                content.discsArr.sort((a, b) => {
                     // Μετατρέπουμε τα ονόματα σε πεζά ώστε να γίνει πιό εύστοχη σύγκριση.
-                    let elementA = a.publisher.toLowerCase();
-                    let elementB = b.publisher.toLowerCase();
+                    let elementA = parseInt(a.spotify_streams.replace(/\./g, ""), 10);
+                    let elementB = parseInt(b.spotify_streams.replace(/\./g, ""), 10);
 
                     // Μόνο όταν επιστρέφεται 1 γίνεται αντικατάσταση.
-                    if(elementA < elementB) return -1;
-                    if(elementA > elementB) return 1;
+                    if(elementA > elementB) return -1;
+                    if(elementA < elementB) return 1;
                     return 0;
                 });
             } else {
                 // Ταξινομούμε ως προς αν έχει γυριστεί ταινία βασισμένη στο βιβλίο.
-                content.booksArr.sort((a, b) => {
+                content.discsArr.sort((a, b) => {
                     // Μετατρέπουμε τα ονόματα σε πεζά ώστε να γίνει πιό εύστοχη σύγκριση.
-                    let elementA = a.adaptation.toLowerCase();
-                    let elementB = b.adaptation.toLowerCase();
+                    let elementA = parseInt(a.total_sales.replace(/\./g, ""), 10);
+                    let elementB = parseInt(b.total_sales.replace(/\./g, ""), 10);
 
                     // Μόνο όταν το επιστρέφεται 1 γίνεται αντικατάσταση.
                     if(elementA < elementB) return 1;
@@ -126,32 +115,32 @@ class ShowContent {
                     return 0;
                 });
             }
-            content.createWorksTable();
+            content.createDiscographyTable();
         } catch(err) {
             console.error("Error:", err);
         }
     }
 
     async getLinksJson() {
-        // Παίρνουμε τα στοιχεία που βρίσκονται στο works.json και τα αποθηκεύουμε στο jsonContent.
+        // Παίρνουμε τα στοιχεία που βρίσκονται στο discography.json και τα αποθηκεύουμε στο jsonContent.
         const response = await fetch("./links.json", {method: "GET"});
         const jsonContent = await response.json();
 
-        content.linksArr = JSON.parse(JSON.stringify(jsonContent.links)); // Αντιγράφουμε τον πίνακα books σε νέο πίνακα.
+        content.linksArr = JSON.parse(JSON.stringify(jsonContent.links)); // Αντιγράφουμε τον πίνακα discography σε νέο πίνακα.
 
         content.createLinksTable();
     }
 
-    createWorksTable() {
-        let anHTML = `<table><tr><th>Book</th><th>Genre</th><th>Release Date</th><th>Adaptation</th></tr>`;
-        for(let aBook of content.booksArr){
-            anHTML += "<tr><td>" + aBook.name + 
-            "</td><td>" + aBook.genre + 
-            "</td><td>" + aBook.release_date + 
-            "</td><td>" + aBook.adaptation + "</td></tr>";
+    createDiscographyTable() {
+        let anHTML = `<table><tr><th>Album</th><th>Release Date</th><th>Spotify Streams</th><th>Total Sales</th></tr>`;
+        for(let aDisc of content.discsArr){
+            anHTML += "<tr><td>" + aDisc.name + 
+            "</td><td>" + aDisc.release_date + 
+            "</td><td>" + aDisc.spotify_streams + 
+            "</td><td>" + aDisc.total_sales + "</td></tr>";
         }
         anHTML += "</table>";
-        document.querySelector(".works-section").innerHTML = anHTML;
+        document.querySelector(".discography-section").innerHTML = anHTML;
     }
 
     createLinksTable() {

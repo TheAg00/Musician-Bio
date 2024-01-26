@@ -104,7 +104,7 @@ a {
 }
 
 .main-nav-li {
-    padding: 0.7em 1em;
+    padding: 0.7em 0.3em;
     border-right: solid;
     border-width: 1px;
     border-color: #4E7CB1;
@@ -193,6 +193,10 @@ table {
 td, th {
     width: 10em;
 }
+
+/* Biography Section */
+
+
 
 
 .no-borders-element {
