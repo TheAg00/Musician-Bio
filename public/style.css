@@ -1,0 +1,224 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html{
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    background-color: #4E7CB1;
+    font-size: 12px;
+}
+
+.grid-container {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1.5fr 3fr;
+    grid-template-rows: min-content min-content auto min-content;
+    grid-gap: 1em;
+    grid-template-areas:
+        "header header"
+        "nav nav"
+        "aside main"
+        "footer footer";
+}
+
+header {
+    grid-area: header;
+    width: 100%;
+    height: 100%;
+}
+
+nav {
+    grid-area: nav;
+    width: 100%;
+    height: 100%;
+}
+
+aside {
+    grid-area: aside;
+    width: 100%;
+    height: 100%;
+}
+
+main { 
+    grid-area: main;
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+}
+
+footer {
+    grid-area: footer;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+}
+
+ul li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* Header Section */
+
+.title-section-div {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-top: 1em;
+}
+
+.webpage-title-span {
+    color: #ffffff;
+}
+
+
+#title-1 {
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+#title-2 {
+    font-size: 0.7em;
+}
+
+/* Main Navigation Bar. */
+
+.main-nav {
+    background-color: #ffffff;
+}
+
+.main-nav-ul {
+    float: left;
+    margin: 0.5em 0;
+    display: grid;
+    text-align: center;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.main-nav-li {
+    padding: 0.7em 0.3em;
+    border-right: solid;
+    border-width: 1px;
+    border-color: #4E7CB1;
+}
+
+.main-nav-li:hover {
+    cursor: pointer;
+    color: #4E7CB1;
+}
+
+.center-div {
+    width: 100%;
+}
+
+/* Aside Submenu */
+
+.aside-div {
+    background-color: #ffffff;
+    border-radius: 10px;
+    margin-left: 0.5em;
+}
+
+.aside-ul {
+    display: none;
+    text-align: center;
+    border-radius: 10px;
+}
+
+
+.aside-li {
+    padding: 1em 0;
+    margin: 0 0.3em;
+    border-bottom: solid;
+    border-width: 1px;
+    border-color: #4E7CB1;  
+}
+
+.aside-li:hover {
+    color: #4E7CB1;
+    cursor: pointer;
+}
+
+
+/* Main Section */
+
+.main-section {
+    display: none;
+    background-color: #ffffff;
+    border-radius: 10px;
+    margin-right: 0.5em;
+    height: 100%;
+    width: 100%;
+    overflow: scroll;
+}
+
+.main-div-section {
+    display: none;
+    flex-direction: column;
+    margin: 0.5em;
+}
+
+.photos-section {
+    display: none;
+    flex-direction: column;
+}
+
+.photos-section-img {
+    margin: 1em;
+    max-width: 100%;
+}
+
+.photos-section-p {
+    margin-left: 1em;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+
+table {
+    table-layout: fixed;
+    width: 100%;
+    text-align: left;
+    margin: 1em;
+}
+
+td, th {
+    width: 10em;
+}
+
+/* Biography Section */
+
+
+
+
+.no-borders-element {
+    border: none;
+}
+
+#early-life-section {
+    display: block;
+}
+
+/*
+@media (min-width: 600px) {
+    body {
+        background: white;
+
+    }
+}
+
+@media (min-width: 1200px) {
+    body {
+        background: white;
+
+    }
+}
+*/

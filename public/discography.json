@@ -1,0 +1,84 @@
+{
+    "type": "module",
+    "discography": [
+        {
+            "name": "Trilogy",
+            "type": "compilation-ablum",
+            "release_date": "2012",
+            "spotify_streams": "3.395.976.511",
+            "total_sales": "1.360.000"
+        },
+
+        {
+            "name": "Kiss Land",
+            "type": "studio-album",
+            "release_date": "2013",
+            "spotify_streams": "662.617.623",
+            "total_sales": "640.000"
+        },
+
+        {
+            "name": "Beauty Behind The Madness",
+            "type": "studio-album",
+            "release_date": "2015",
+            "spotify_streams": "8.857.473.975",
+            "total_sales": "7.584.588"
+        },
+
+        {
+            "name": "Starboy",
+            "type": "studio-album",
+            "release_date": "2016",
+            "spotify_streams": "12.067.471.004",
+            "total_sales": "6.070.666"
+        },
+
+        {
+            "name": "My Dear Melancholy",
+            "type": "extended-play-album",
+            "release_date": "2018",
+            "spotify_streams": "3.692.332.402",
+            "total_sales": "1.201.541"
+        },
+
+        {
+            "name": "The Weeknd in Japan",
+            "type": "compilation-ablum",
+            "release_date": "2018",
+            "spotify_streams": "14.156.292.102",
+            "total_sales": "NaN"
+        },
+
+        {
+            "name": "After Hours",
+            "type": "studio-album",
+            "release_date": "2020",
+            "spotify_streams": "9.871.732.553",
+            "total_sales": "4.958.942"
+        },
+
+        {
+            "name": "After Hours(Remixes)",
+            "type": "extended-play-album",
+            "release_date": "2020",
+            "spotify_streams": "11.598.932.454",
+            "total_sales": "NaN"
+        },
+
+        {
+            "name": "The Highlights",
+            "type": "compilation-ablum",
+            "release_date": "2021",
+            "spotify_streams": "26.219.426.713",
+            "total_sales": "2.116.000"
+        },
+
+        {
+            "name": "Dawn FM",
+            "type": "studio-album",
+            "release_date": "2022",
+            "spotify_streams": "2.661.929.345",
+            "total_sales": "340.000"
+        }
+    ]
+}
