@@ -13,6 +13,7 @@ const users = { 'user1': 'password1', 'user2': 'password2' };
 router.post('/', (req, res) => {
     const username = req.body.username;
     const password = users[username];
+
     if(password == req.body.password) {
         jwt.sign({ username: username}, 'secretkey', (err, token) => {
             res.status(200).json(token);
@@ -42,9 +43,9 @@ function isAuthenticated(req, res, next) {
 }
 
 
-router.get('/data', isAuthenticated, (req, res) => {
+router.get('/', isAuthenticated, (req, res) => {
     const data = [{ name: 'John', age: 30 }, { name: 'Maria', age: 22 }];
-    res.status(200).send(JSON.stringify(data));    
+    res.status(200).send(JSON.stringify(data));
 });
 
 module.exports = router;

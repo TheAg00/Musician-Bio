@@ -276,16 +276,20 @@
                 <div class = "links-section content-section" id = "links-section-div"></div>
 
                 <div class = "main-div-section admin-section" id = "admin-section-div">
-                    <form action="/" class = "content-section" id = "log-in-section">
-                        <p>
-                            <label for = "username">Username</label>
-                            <input type = "text" name = "username" placeholder="Enter Username" required>
-                        </p>
-                        <p>
-                            <label for = "password">Password</label>
-                            <input type = "password" name = "password" placeholder="Enter Password" required>
-                        </p>
-                        <button type="button" id="ButtonLogin">Login</button>
+                    <form action="/login" method = "post" class = "content-section" id = "log-in-section">
+                        <label for = "username">Username</label>
+                        <br>
+                        <input type = "text" name = "username" placeholder="Enter Username" required>
+                        <br>
+                        <br>
+
+                        <label for = "password">Password</label>
+                        <br>
+                        <input type = "password" name = "password" placeholder="Enter Password" required>
+                        <br>
+                        <br>
+
+                        <input type = "submit" value = "login">
                     </form>
                 </div>
             </main>

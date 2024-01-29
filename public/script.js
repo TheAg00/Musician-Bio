@@ -55,11 +55,49 @@ class ShowContent {
             return;
         }
 
+
         showMainSection.style.display = "block";
     }
 
 
-    
+    async admin()  {
+        let jwtToken
+
+        function login() {
+            jwtToken = ""
+            let credentials = {
+                username: document.querySelector("[name = 'username']").value,
+                password: document.querySelector("[name = 'password']").value
+            }
+
+            fetch("/login", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'applications/json'
+                },
+                method: "POST",
+                body: JSON.stringify(credentials)
+            })
+                .then((res) => res.json())
+                .then((json) => {
+                    if(json) {
+                        jwtToken = json
+                        document.querySelector("[name='username']").value = "";
+                        document.querySelector("[name='password']").value = "";
+                        document.getElementById("data").innerText = "Logged In"
+                    }
+                })
+                .catch(err => showError(err))
+        }
+
+        function showError(err) {
+            document.getElementById("data").innerHTML = "Error";
+            console.log(err);
+        }
+
+        document.getElementById("ButtonLogin").addEventListener("click", login);
+    }   
+
 
     async showAllAblums(albums) {
         let anHTML = `<table><tr><th>Album</th><th>Release Date</th><th>Spotify Streams</th><th>Total Sales</th></tr>`;
@@ -163,7 +201,7 @@ class ShowContent {
     }
 }
 
-const socket = new WebSocket("ws://localhost:4000");
+// const socket = new WebSocket("ws://localhost:4000");
 
 
 const content = new ShowContent();

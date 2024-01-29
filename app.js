@@ -16,11 +16,10 @@ app.use(express.json())
 
 app.listen(PORT, (err) => {
     if(!err) 
-        console.log(`Server listening on port ${PORT}!`);
+        console.log(`Server listening at http://localhost:${PORT}`);
     else 
         console.log(err);
 })
-
 
 
 
