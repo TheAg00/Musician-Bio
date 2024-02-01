@@ -194,6 +194,10 @@ td, th {
     width: 10em;
 }
 
+.aside-div-loged-on {
+    display: none;
+}
+
 /* Biography Section */
 
 

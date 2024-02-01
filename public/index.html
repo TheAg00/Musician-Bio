@@ -8,6 +8,8 @@
         <link rel = "stylesheet" type = "text/css" href = "style.css">
 		<script type = "text/javascript" src = "script.js" defer></script>
 
+        <link rel="icon" href="resources/favicon/favicon-32x32.ico" type="image/x-icon">
+
         <title>The Weeknd Bio</title>
     </head>
 
@@ -70,10 +72,15 @@
 
                     <!-- Administration Submenu-->
                     <ul class = "aside-ul" id = "aside-admin-ul">
-                        <li class = "aside-li" id = "log-in">Log In</li>
-                        <li class = "aside-li" id = "log-out">Log Out</li>
-                        <li class = "aside-li" id = "discography-managment">Discography Managment</li>
-                        <li class = "aside-li no-borders-element" id = "links-managment">Links Managment</li>
+                        <div class = "aside-div-login">
+                            <li class = "aside-li" id = "log-in">Log In</li>
+                        </div>
+                        
+                        <div class = "aside-div-loged-on">
+                            <li class = "aside-li" id = "log-out">Log Out</li>
+                            <li class = "aside-li" id = "discography-managment">Discography Managment</li>
+                            <li class = "aside-li no-borders-element" id = "links-managment">Links Managment</li>
+                        </div>
                     </ul>
                 </div>
             </aside>
@@ -276,21 +283,22 @@
                 <div class = "links-section content-section" id = "links-section-div"></div>
 
                 <div class = "main-div-section admin-section" id = "admin-section-div">
-                    <form action="/login" method = "post" class = "content-section" id = "log-in-section">
+                    <!-- <form action="/login" method = "post" class = "content-section" id = "log-in-section">
                         <label for = "username">Username</label>
                         <br>
-                        <input type = "text" name = "username" placeholder="Enter Username" required>
+                        <input type = "text" id = "username" name = "username" placeholder="Enter Username" required>
                         <br>
                         <br>
 
                         <label for = "password">Password</label>
                         <br>
-                        <input type = "password" name = "password" placeholder="Enter Password" required>
+                        <input type = "password" id = "password" name = "password" placeholder="Enter Password" required>
                         <br>
                         <br>
 
-                        <input type = "submit" value = "login">
-                    </form>
+                        <button onclick = "login()" type = "submit" id = "login-button">Log In</button>
+                        <div id = "data"></div>
+                    </form> -->
                 </div>
             </main>
 

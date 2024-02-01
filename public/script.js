@@ -1,5 +1,4 @@
 class ShowContent {
-
     // Για κάθε στοιχείο του Nav, εμφανίζουμε τις κατάλληλες επιλογές στο Aside.
     showAsideMenu() {
         // Κρατάμε το όνομα id του στοιχείου που κλικάραμε και φτιάχνουμε το id του αντίστοιχου στοιχείου στο aside.
@@ -17,6 +16,7 @@ class ShowContent {
         // Καλούμε τη showMain για κάθε στοιχείου του aside που κλικάρουμε.
         const asideLi = document.querySelectorAll(".aside-li");
         for(let elementAsideLi of asideLi) elementAsideLi.addEventListener("click", content.showMain);
+
     }
 
     // Για κάθε στοιχείο του Aside, εμφανίζουμε και το κατάλληλο περιεχόμενο της main.
@@ -58,54 +58,27 @@ class ShowContent {
 
         showMainSection.style.display = "block";
     }
+    
 
-
-    async admin()  {
-        let jwtToken
-
-        function login() {
-            jwtToken = ""
-            let credentials = {
-                username: document.querySelector("[name = 'username']").value,
-                password: document.querySelector("[name = 'password']").value
+    showAllAblums(albums) {
+        let anHTML = `<table><tr><th>Album</th><th>Release Date</th><th>Spotify Streams</th><th>Total Sales</th></tr>`;
+        for(let anAlbum of albums.discography) {
+            let showAlbum = true;
+            if(content.clickedAside === "studio-albums" && anAlbum.type !== "studio-album") {
+                showAlbum = false;
+            } else if(content.clickedAside === "extended-play-albums" && anAlbum.type !== "extended-play-album") {
+                showAlbum = false;
+            } else if(content.clickedAside === "compilation-albums" && anAlbum.type !== "compilation-ablum") {
+                showAlbum = false;
             }
 
-            fetch("/login", {
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'applications/json'
-                },
-                method: "POST",
-                body: JSON.stringify(credentials)
-            })
-                .then((res) => res.json())
-                .then((json) => {
-                    if(json) {
-                        jwtToken = json
-                        document.querySelector("[name='username']").value = "";
-                        document.querySelector("[name='password']").value = "";
-                        document.getElementById("data").innerText = "Logged In"
-                    }
-                })
-                .catch(err => showError(err))
-        }
-
-        function showError(err) {
-            document.getElementById("data").innerHTML = "Error";
-            console.log(err);
-        }
-
-        document.getElementById("ButtonLogin").addEventListener("click", login);
-    }   
-
-
-    async showAllAblums(albums) {
-        let anHTML = `<table><tr><th>Album</th><th>Release Date</th><th>Spotify Streams</th><th>Total Sales</th></tr>`;
-        for(let anAlbum of albums) {
-            anHTML += "<tr><td>" + anAlbum.name + 
-            "</td><td>" + anAlbum.release_date + 
-            "</td><td>" + anAlbum.spotify_streams + 
-            "</td><td>" + anAlbum.total_sales + "</td></tr>";
+            if(showAlbum === true) {
+                anHTML += "<tr><td>" + anAlbum.name + 
+                "</td><td>" + anAlbum.release_date + 
+                "</td><td>" + anAlbum.spotify_streams + 
+                "</td><td>" + anAlbum.total_sales + "</td></tr>";
+            }
+            
         }
         anHTML += "</table>";
         document.querySelector(".discography-section").innerHTML = anHTML;
@@ -113,42 +86,49 @@ class ShowContent {
 
     async getDiscographyJson() {
         // Ανάλογα με την επιλογή του χρήστη, εφαρμόζουμε την ανάλογη ταξινόμιση.
-        if(content.clickedAside === "all-albums") {
-            fetch("api/discography", { method: "GET" })
-                .then((res) => res.json())
-                .then((json) => showAllAblums((json)))
-                .catch((err) => console.error("Error:", err));
-        }
-        else if(content.clickedAside === "studio-albums") {
-            fetch("api/discography", { method: "GET" })
-                .then((res) => res.json())
-                .then((json) => showAllAblums((json)))
-                .catch((err) => console.error("Error:", err));
-        } else if(content.clickedAside === "extended-play-albums") {
-            // Ταξινομούμε ως προς την ημερομηνία κυκλοφορίας του βιβλίου.
-            content.discsArr.sort((a, b) => { 
-                let elementA = a.release_date;
-                let elementB = b.release_date;
+        // if(content.clickedAside === "all-albums") {
+        fetch("/discography", {
+            method: "GET",
+            headers: { "Content-Type": "application/json" }
+        })
+            .then((res) => {
+                if(!res.ok) {
+                    throw new Error(res.status);
+                }
+                return res.json()
+            })
+            .then((json) => content.showAllAblums((json)))
+            .catch((err) => console.error("Error:", err));
+        // }
+        // else if(content.clickedAside === "studio-albums") {
+        //     fetch("/discography", { method: "GET" })
+        //         .then((res) => res.json())
+        //         .then((json) => showAllAblums((json)))
+        //         .catch((err) => console.error("Error:", err));
+        // } else if(content.clickedAside === "extended-play-albums") {
+        //     // Ταξινομούμε ως προς την ημερομηνία κυκλοφορίας του βιβλίου.
+        //     content.discsArr.sort((a, b) => { 
+        //         let elementA = a.release_date;
+        //         let elementB = b.release_date;
 
-                // Μόνο όταν επιστρέφεται 1 γίνεται αντικατάσταση.
-                if(elementA < elementB) return -1;
-                if(elementA > elementB) return 1;
-                return 0;
-            });
-        } else {
-            // Ταξινομούμε ως προς το είδος του βιβλίου.
-            content.discsArr.sort((a, b) => {
-                // Μετατρέπουμε τα ονόματα σε πεζά ώστε να γίνει πιό εύστοχη σύγκριση.
-                let elementA = parseInt(a.spotify_streams.replace(/\./g, ""), 10);
-                let elementB = parseInt(b.spotify_streams.replace(/\./g, ""), 10);
+        //         // Μόνο όταν επιστρέφεται 1 γίνεται αντικατάσταση.
+        //         if(elementA < elementB) return -1;
+        //         if(elementA > elementB) return 1;
+        //         return 0;
+        //     });
+        // } else {
+        //     // Ταξινομούμε ως προς το είδος του βιβλίου.
+        //     content.discsArr.sort((a, b) => {
+        //         // Μετατρέπουμε τα ονόματα σε πεζά ώστε να γίνει πιό εύστοχη σύγκριση.
+        //         let elementA = parseInt(a.spotify_streams.replace(/\./g, ""), 10);
+        //         let elementB = parseInt(b.spotify_streams.replace(/\./g, ""), 10);
 
-                // Μόνο όταν επιστρέφεται 1 γίνεται αντικατάσταση.
-                if(elementA > elementB) return -1;
-                if(elementA < elementB) return 1;
-                return 0;
-            });
-        }
-        content.createDiscographyTable();
+        //         // Μόνο όταν επιστρέφεται 1 γίνεται αντικατάσταση.
+        //         if(elementA > elementB) return -1;
+        //         if(elementA < elementB) return 1;
+        //         return 0;
+        //     });
+        // }
     }
 
     async getLinksJson() {
@@ -201,9 +181,11 @@ class ShowContent {
     }
 }
 
-// const socket = new WebSocket("ws://localhost:4000");
+
+const socket = new WebSocket('ws://localhost:4000/', 'echo-protocol');
 
 
 const content = new ShowContent();
 const navLi = document.querySelectorAll(".main-nav-li"); // Κρατάμε όλα τα li της μπάρας πλοήγησης στο header.
 for(let elementNavLi of navLi) elementNavLi.addEventListener("click", content.showAsideMenu); // Καλούμε τη συνάρτηση showAsideMenu για κάθε στοιχείο που κλικάρουμε.
+

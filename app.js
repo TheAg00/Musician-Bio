@@ -7,8 +7,8 @@ const PORT = process.env.port || 4000;
 
 app.use(express.static(__dirname + "/public"));
 
-const userRouter = require('./routes/login');
-app.use('/login', userRouter);
+const discographyRouter = require('./routes/readJSON');
+app.use('/discography', discographyRouter);
 
 
 app.use(express.json())
@@ -16,7 +16,7 @@ app.use(express.json())
 
 app.listen(PORT, (err) => {
     if(!err) 
-        console.log(`Server listening at http://localhost:${PORT}`);
+        console.log(`Server is running at http://localhost:${PORT}`);
     else 
         console.log(err);
 })
