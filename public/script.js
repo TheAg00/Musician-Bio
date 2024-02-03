@@ -51,7 +51,7 @@ class ShowContent {
         }
         
         if(content.clickedNav === "links") {
-            content.getLinksJson();
+            content.getLinks();
             return;
         }
 
@@ -85,8 +85,6 @@ class ShowContent {
     }
 
     async getDiscographyJson() {
-        // Ανάλογα με την επιλογή του χρήστη, εφαρμόζουμε την ανάλογη ταξινόμιση.
-        // if(content.clickedAside === "all-albums") {
         fetch("/discography", {
             method: "GET",
             headers: { "Content-Type": "application/json" }
@@ -99,60 +97,46 @@ class ShowContent {
             })
             .then((json) => content.showAllAblums((json)))
             .catch((err) => console.error("Error:", err));
-        // }
-        // else if(content.clickedAside === "studio-albums") {
-        //     fetch("/discography", { method: "GET" })
-        //         .then((res) => res.json())
-        //         .then((json) => showAllAblums((json)))
-        //         .catch((err) => console.error("Error:", err));
-        // } else if(content.clickedAside === "extended-play-albums") {
-        //     // Ταξινομούμε ως προς την ημερομηνία κυκλοφορίας του βιβλίου.
-        //     content.discsArr.sort((a, b) => { 
-        //         let elementA = a.release_date;
-        //         let elementB = b.release_date;
-
-        //         // Μόνο όταν επιστρέφεται 1 γίνεται αντικατάσταση.
-        //         if(elementA < elementB) return -1;
-        //         if(elementA > elementB) return 1;
-        //         return 0;
-        //     });
-        // } else {
-        //     // Ταξινομούμε ως προς το είδος του βιβλίου.
-        //     content.discsArr.sort((a, b) => {
-        //         // Μετατρέπουμε τα ονόματα σε πεζά ώστε να γίνει πιό εύστοχη σύγκριση.
-        //         let elementA = parseInt(a.spotify_streams.replace(/\./g, ""), 10);
-        //         let elementB = parseInt(b.spotify_streams.replace(/\./g, ""), 10);
-
-        //         // Μόνο όταν επιστρέφεται 1 γίνεται αντικατάσταση.
-        //         if(elementA > elementB) return -1;
-        //         if(elementA < elementB) return 1;
-        //         return 0;
-        //     });
-        // }
     }
 
-    async getLinksJson() {
-        try {
-            // Παίρνουμε τα στοιχεία που βρίσκονται στο discography.json και τα αποθηκεύουμε στο jsonContent.
-            const response = await fetch("./links.json", {method: "GET"});
-            const jsonContent = await response.json();
-
-            content.linksArr = JSON.parse(JSON.stringify(jsonContent.links)); // Αντιγράφουμε τον πίνακα discography σε νέο πίνακα.
-
+    showLinks(links) {
+        let anHTML = `<table><tr><th>Links</th></tr>`;
+        for(let aLink of links) {
             if(content.clickedAside === "official-sites") {
-                content.linksArr = content.linksArr.filter(link => link.type === "official-website");
+                if(aLink.type === "official-website") {
+                    anHTML += "<tr><td><a href =\"" + aLink.url + "\">" + aLink.name + "</a></td></tr>";
+                }
             } else if(content.clickedAside === "stream-music") {
-                content.linksArr = content.linksArr.filter(link => link.type === "stream-music");
+                if(aLink.type === "stream-music") {
+                    anHTML += "<tr><td><a href =\"" + aLink.url + "\">" + aLink.name + "</a></td></tr>";
+                }
             } else if(content.clickedAside === "social-media") {
-                content.linksArr = content.linksArr.filter(link => link.type === "social-media");
+                if(aLink.type === "social-media") {
+                    anHTML += "<tr><td><a href =\"" + aLink.url + "\">" + aLink.name + "</a></td></tr>";
+                }
             } else {
-                content.linksArr = content.linksArr.filter(link => link.type === "resources");
+                if(aLink.type === "resources") {
+                    anHTML += "<tr><td><a href =\"" + aLink.url + "\">" + aLink.name + "</a></td></tr>";
+                }
             }
-
-            content.createLinksTable();
-        } catch(err) {
-            console.error("Error:", err);
         }
+        anHTML += "</table>";
+        document.querySelector(".links-section").innerHTML = anHTML;
+    }
+
+    async getLinks() {
+        fetch('/links', {
+            method: "GET",
+            headers: { "Content-Type": "application/json" }
+        })
+            .then((res) => {
+                if(!res.ok) {
+                    throw new Error(res.status);
+                }
+                return res.json()
+            })
+            .then((json) => content.showLinks((json)))
+            .catch((err) => console.error("Error:", err));
     }
 
     createLinksTable() {

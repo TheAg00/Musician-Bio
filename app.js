@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
+const mysql = require('mysql');
 
 const app = express();
 const PORT = process.env.port || 4000;
@@ -8,8 +9,10 @@ const PORT = process.env.port || 4000;
 app.use(express.static(__dirname + "/public"));
 
 const discographyRouter = require('./routes/readJSON');
-app.use('/discography', discographyRouter);
+const linksRouter = require('./routes/readDB');
 
+app.use('/discography', discographyRouter);
+app.use('/links', linksRouter);
 
 app.use(express.json())
 
@@ -20,6 +23,20 @@ app.listen(PORT, (err) => {
     else 
         console.log(err);
 })
+
+
+const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '12345',
+    database: 'links'
+});
+
+connection.connect((err) => {
+    if(err) return console.error(err.message);
+
+    console.log('Connected to MySQL!');
+});
 
 
 
