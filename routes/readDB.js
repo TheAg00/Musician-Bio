@@ -3,6 +3,7 @@ const mysql = require('mysql');
 
 const router = express.Router();
 
+// Δημιουργούμε σύνδεση με τη βάση δεδομένων μας.
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -10,7 +11,7 @@ const connection = mysql.createConnection({
     database: 'links'
 });
 
-
+// Στέλνουμε τα λινκς που βρικσόντουσαν στη βάση δεδομένων.
 router.get('/', async (req, res) => {
     const selectLinks = 'SELECT * FROM websites';
 

@@ -283,7 +283,7 @@
                 <div class = "links-section content-section" id = "links-section-div"></div>
 
                 <div class = "main-div-section admin-section" id = "admin-section-div">
-                    <!-- <form action="/login" method = "post" class = "content-section" id = "log-in-section">
+                    <form action="/admin/login" method = "post" class = "content-section" id = "log-in-section">
                         <label for = "username">Username</label>
                         <br>
                         <input type = "text" id = "username" name = "username" placeholder="Enter Username" required>
@@ -296,9 +296,18 @@
                         <br>
                         <br>
 
-                        <button onclick = "login()" type = "submit" id = "login-button">Log In</button>
-                        <div id = "data"></div>
-                    </form> -->
+                        <button type = "submit" id = "login-button">Log In</button>
+                        
+                        <p>Username: user1, Password: password1</p>
+                    </form>
+                </div>
+
+                <!-- Admin Section -->
+                
+                <div class = "content-section" id = "log-out-section">
+                    <h3>Are you sure you want to log out?</h3>
+                    <br>
+                    <a href="/admin/logout"><button type = "submit" id = "log-out-button">Log Out</button></a>
                 </div>
             </main>
 
